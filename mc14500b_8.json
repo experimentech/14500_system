@@ -1,0 +1,31 @@
+
+{
+  "name":"mc14500b_8",
+  "width":8,
+  "vars":{
+    "reg":{"bits":1, 		"toks":["a","b"]},
+    "inreg":{"bits":4, 		"toks":["rr","i1","i2","i3","i4","i5","i6","i7","s0","s1","s2","s3","s4","s5","S6","s7"]},
+    "outreg":{"bits":4, 	"toks":["o0","o1","o2","o3","o4","o5","o6","o7","s0","s1","s2","s3","s4","s5","S6","s7"]},
+    "ioreg":{"bits":3, 		"toks":["s0","s1","s2","s3","s4","s5","S6","s7"]},
+    "ioline3":{"bits":3},
+    "ioport1":{"bits":1}
+  },
+  "rules":[
+    {"fmt":"nopo",			"bits":["00000000"]},
+    {"fmt":"ld ~inreg",			"bits":["0001",0]},  
+    {"fmt":"ldc ~inreg",		"bits":["0010",0]},   
+    {"fmt":"and ~inreg",		"bits":["0011",0]},    
+    {"fmt":"andc ~inreg",		"bits":["0100",0]},    
+    {"fmt":"or ~inreg",			"bits":["0101",0]},
+    {"fmt":"orc ~inreg",		"bits":["0110",0]},
+    {"fmt":"xnor ~inreg",		"bits":["0111",0]},    
+    {"fmt":"sto ~outreg",		"bits":["1000",0]},
+    {"fmt":"stoc ~outreg",		"bits":["1001",0]},
+    {"fmt":"ien ~inreg",		"bits":["1010",0]},
+    {"fmt":"oen ~inreg",		"bits":["1011",0]},
+    {"fmt":"jmp",			"bits":["11000000"]},
+    {"fmt":"rtn",			"bits":["11010000"]},
+    {"fmt":"skz",			"bits":["11100000"]},
+    {"fmt":"nopf",			"bits":["11110000"]}  
+  ]
+}
