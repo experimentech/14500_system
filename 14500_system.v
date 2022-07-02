@@ -1,4 +1,6 @@
 
+`include "14500_mc14599b.v"
+
 `include "14500_rom.v"
 `include "14500_mc14512.v"
 `include "14500_lu.v"
