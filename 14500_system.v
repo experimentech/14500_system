@@ -9,6 +9,7 @@
 `include "hvsync_generator.v"
 
 
+//uncomment then re-comment to get the json to load correctly
 //`include "mc14500b_8.json"
 
 
@@ -22,11 +23,8 @@ module top(clk, reset, hsync, vsync, rgb);
   wire [8:0] hpos;
   wire [8:0] vpos;
   
-  //reg piffle;
   
-
-
-
+  
   hvsync_generator hvsync_gen(
     .clk(clk),
     .reset(reset),
@@ -99,14 +97,15 @@ module top(clk, reset, hsync, vsync, rgb);
   );
   
   //wire pc_clk;
-  wire [15:0] pc_addr_out;
+  wire [15:0] pc_addr_o;
   wire [15:0] pc_addr_in;
   wire pc_addr_w;
+  wire pc_reset_i;
   //program_counter(pc_clk, reset, addr_out, addr_in, addr_w);
   program_counter pc(
     .pc_clk(clk),
-    .reset(reset),
-    .addr_out(pc_addr_out),
+    .reset(pc_reset_i),
+    .addr_out(pc_addr_o),
     .addr_in(pc_addr_in),
     .addr_w(pc_addr_w)
   );
@@ -126,8 +125,20 @@ module top(clk, reset, hsync, vsync, rgb);
   
   reg[6:0] cntr;
   
-  always@(posedge clk)
+  always@(posedge clk or posedge reset)
     begin
+      
+      if(reset)
+        begin
+          pc_reset_i <= 1;
+        end
+      else
+        begin
+          pc_reset_i <= 0;
+        end
+           
+          
+          
       /*
       if(reset)
         begin
@@ -141,7 +152,7 @@ module top(clk, reset, hsync, vsync, rgb);
       //Spitting out data to 
       //lu_instruction <= rom[7:4],[cntr[6:0]]; //from hacky counter
       //lu_instruction <= (rom[cntr[6:0])[7:4];
-      rom_addr <= cntr[6:0]; //just driving rom address with a counter for now.
+      rom_addr <= pc_addr_o[6:0];//cntr[6:0]; //just driving rom address with a counter for now.
       lu_instruction <= instr_slice;
       lu_data_in <= cntr[3]; //TODO add all the IO support so something can actually work
 
@@ -176,6 +187,8 @@ module top(clk, reset, hsync, vsync, rgb);
       imux_abc <=0;
       imux_inh <= 0;
       imux_dis <= 0;
+      
+      //pc_clk_i <= clk;
     end
     
 

@@ -7,12 +7,31 @@ module mc14599(A, Q, data, reset, w_disable);
   input w_disable;
   
   reg[7:0] d;
+  reg[7:0] bitmask;
   //TODO: add all the cases. Just a stub so far. Not in the mood.
   always@(*)
     begin
-      r[A] <= data;
+      //r[A] <= data & (~reset); //if reset, force zero.
+      if(!reset & !w_disable)
+        begin
+          d[A] <= data; //what the hell is r?
+        end
+      else if(!reset &w_disable)
+        begin
+        end
+      else
+        begin
+          //this is totally the wrong approach.
+        end
       
-      Q <= r;
+      /*
+      reset?
+      How do I do a variable single bit bitmask.
+      bitmask = 8'b0 & ???
+      
+      */
+      
+      Q <= d;
     end
   
   

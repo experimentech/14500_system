@@ -20,6 +20,7 @@ module program_counter(pc_clk, reset, addr_out, addr_in, addr_w);
       else
         begin
           addr_out <= program_counter;
+          program_counter <= program_counter + 1;
         end       
     end
   

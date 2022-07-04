@@ -58,7 +58,7 @@ module lu_fudge(data_in, data_out, clk, instruction, reset, write_mode, result, 
         flgf <=0;
 
     d <= data_in;
-
+    //$display("%b",d);
     case(instruction)
       `OP_NOPO :
       begin

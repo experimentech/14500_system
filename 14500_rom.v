@@ -15,7 +15,8 @@ module my_rom(rom_data, rom_addr);
     reg [7:0] rom[0:127];
   output [7:0]rom_data;
   assign rom_data = rom[rom_addr];
-  
+
+  //all the outputs seem to wiggle now.
    initial begin
 `ifdef EXT_INLINE_ASM
     // yeehaw
@@ -36,6 +37,13 @@ Start:
       andc rr
       or i7
       sto s0
+      
+      ld rr
+      and rr
+      andc rr
+      skz
+      jmp
+      rtn
       
       
 Loop:
